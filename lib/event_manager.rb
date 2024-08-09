@@ -10,26 +10,17 @@ def clean_zipcode(zipcode)
   zipcode.to_s.rjust(5, '0')[0..4]
 end
 
-def clean_phone_numbers(num)   
-  if !num.include?('E') 
-    num = num.gsub(/[^0-9]/,'').to_i 
-  else 
-    num = num.to_i 
-  end 
+def clean_phone_numbers(num)  
+  num = num.include?('E') ? num.to_i : num.gsub(/[^0-9]/, '')
 
-  if num < 10 
-   num.to_s.rjust(10,'0') 
-  elsif num == 11 
-    if num[0] == 1 
-    num.to_s[1..-1]
-    else 
-     num.to_s[0..-2]
-    end 
-  elsif num > 11  
-   num.to_s[0..9] 
-  else 
-    num.to_s 
-  end 
+  case num.to_s.length
+  when 10
+    num
+  when 11
+    num.to_s.start_with?('1') ? num[1..-1] : 'Invalid number'
+  else
+    'Invalid number'
+  end
 end  
 
 def get_time(date)
@@ -127,8 +118,10 @@ contents.each do |row|
 
   form_letter = erb_template.result(binding) 
 
-  save_thank_you_letter(id,form_letter) 
+  save_thank_you_letter(id,form_letter)  
+
+  puts phone_numbers
 end
 
- optimal_reg_time = optimal_time(all_reg_times,3) 
-optimal_reg_days = optimal_days(all_reg_days,3)
+# optimal_reg_time = optimal_time(all_reg_times,3) 
+# optimal_reg_days = optimal_days(all_reg_days,3)
