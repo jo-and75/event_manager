@@ -123,5 +123,5 @@ contents.each do |row|
   puts phone_numbers
 end
 
-# optimal_reg_time = optimal_time(all_reg_times,3) 
-# optimal_reg_days = optimal_days(all_reg_days,3)
+optimal_reg_time = optimal_time(all_reg_times,3) 
+optimal_reg_days = optimal_days(all_reg_days,3)
